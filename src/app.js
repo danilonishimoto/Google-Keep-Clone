@@ -1,3 +1,6 @@
+import deleteIcon from './assets/delete-icon.svg'
+import editIcon from './assets/edit-icon.svg'
+
 class App {
     constructor() {
         this.notes = [];
@@ -8,6 +11,7 @@ class App {
         this.$noteText = document.querySelector('#note-text');
         this.$formButtons = document.querySelector('#form-buttons')
         this.$notes = document.querySelector('#notes')
+        this.$closeButton = document.querySelector('#form-close-button')
 
         this.addEventListeners();
     }
@@ -26,13 +30,24 @@ class App {
                 this.addNote({ title, text });
             }
         })
+
+        this.$closeButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            this.closeForm();
+        })
     }
 
     handleFormClick(event) {
         const isFormClicked = this.$form.contains(event.target);
 
+        const title = this.$noteTitle.value;
+        const text = this.$noteText.value;
+        const hasNote = title || text;
+
         if (isFormClicked) {
             this.openForm();
+        } else if(hasNote) {
+            this.addNote({title, text});
         } else {
             this.closeForm();
         }
@@ -52,10 +67,10 @@ class App {
         this.$noteText.value = "";
     }
 
-    addNote(note) {
+    addNote({title, text}) {
         const newNote = {
-            title: note.title,
-            text: note.text,
+            title: title,
+            text: text,
             color: 'white',
             id: this.notes.length > 0 ? this.notes[this.notes.length - 1].id + 1 : 1,
         }
@@ -74,8 +89,8 @@ class App {
                 <div class="note-text>${note.text}</div>
                 <div class="toolbar-container">
                     <div class="toolbar">
-                        <img class="toolbar-color" src="https://icon.now.sh/palette">
-                        <img class="toolbar-delete" src="https://icon.now.sh/delete">
+                        <img class="toolbar-color" src="/${deleteIcon}?url">
+                        <img class="toolbar-delete" src="/${editIcon}?url">
                     </div>
                 </div>
                 
