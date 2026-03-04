@@ -210,8 +210,6 @@ input:focus {
   margin: 16px;
   width: 250px;
   background-color: #fff;
-  border-color: #e0e0e0;
-  border: 1px solid #d3d3d3;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
@@ -292,7 +290,7 @@ input:focus {
 #color-tooltip {
   border-bottom: 2px solid #fff;
   position: absolute;
-  top: -40;
+  top: -40px;
   background: #fff;
   border: 1px solid black;
   left: 0;
