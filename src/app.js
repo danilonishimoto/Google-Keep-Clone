@@ -26,6 +26,11 @@ class App {
 
     addEventListeners() {
         document.body.addEventListener('click', (event) => {
+            if (event.target.matches('.toolbar-delete')) {
+                this.deleteNote(event);
+                return;
+            }
+
             this.handleFormClick(event);
             this.selectNote(event);
             this.openModal(event);
@@ -127,7 +132,7 @@ class App {
 
     editNoteColor(color) {
         this.notes = this.notes.map(note =>
-            note.id === Number(this.id) ? {...note, color} : note
+            note.id === Number(this.id) ? { ...note, color } : note
         )
         this.displayNotes();
     }
@@ -140,6 +145,15 @@ class App {
             this.text = $noteText.innerText;
             this.id = $selectedNote.dataset.id;
         }
+    }
+
+    deleteNote(event) {
+        event.stopPropagation();
+        if (!event.target.matches('.toolbar-delete')) return;
+        const $selectedNote = event.target.closest('.note');
+        const id = $selectedNote.dataset.id;
+        this.notes = this.notes.filter(note => note.id !== Number(id));
+        this.displayNotes();
     }
 
     openModal(event) {
